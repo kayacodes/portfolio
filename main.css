@@ -694,7 +694,7 @@ textarea{
     font-weight: 300;
 }
 
-button[type="submit"]{
+input[type="submit"]{
     font-family: 'Khand', sans-serif;
     width: initial;
     background: #68b5b9;
@@ -706,7 +706,7 @@ button[type="submit"]{
     transition: background-color 650ms;
 }
 
-button[type="submit"]:hover{
+input[type="submit"]:hover{
     color: #221e3f;
     background-color: #97E8EC;
 }
