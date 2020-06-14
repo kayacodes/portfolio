@@ -684,17 +684,7 @@ textarea{
     outline-color: #2d9ca1;
 }
 
-.error{
-    color: red;
-}
-
-.success{
-    color: white;
-    text-align: center;
-    font-weight: 300;
-}
-
-input[type="submit"]{
+button[type="submit"]{
     font-family: 'Khand', sans-serif;
     width: initial;
     background: #68b5b9;
@@ -706,7 +696,7 @@ input[type="submit"]{
     transition: background-color 650ms;
 }
 
-input[type="submit"]:hover{
+button[type="submit"]:hover{
     color: #221e3f;
     background-color: #97E8EC;
 }
