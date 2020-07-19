@@ -486,11 +486,6 @@ li{
     transition: color 650ms;
 }
 
-.portfolio-img .img-details:hover .img-text h6{
-    transform: translateY(0);
-    transition-delay: 0.2s;    
-}
-
 .portfolio-img .img-details:hover .img-text p {
     transform: translateY(0);
     transition-delay: 0.3s;    
@@ -524,6 +519,7 @@ li{
     text-align: end;
     font-size: 2.4rem;
     text-transform: uppercase;
+    padding-bottom: 1rem;
 }
 
 .portfolio-description p{
@@ -593,6 +589,9 @@ li{
     font-size: 1.5rem;
 }
 
+.modal-details li{
+    font-size: 1.5rem;
+}
 
 /*End services */
 
@@ -615,6 +614,14 @@ li{
 
 .timeline h1{
     font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    opacity: .3;
+}
+
+.timeline a{
+    font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: 300;
     margin-bottom: 1rem;
