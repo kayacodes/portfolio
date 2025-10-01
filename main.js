@@ -1,7 +1,5 @@
-// AOS animations
 AOS.init({ once: true, duration: 600, easing: 'ease-out' });
 
-// Mobile menu toggle
 const nav = document.querySelector('.nav');
 const btn = document.querySelector('.menu-btn');
 btn?.addEventListener('click', () => {
@@ -9,7 +7,6 @@ btn?.addEventListener('click', () => {
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
 
-// Expand/collapse "View details"
 document.querySelectorAll('[expand-more]').forEach(el => {
     el.addEventListener('click', () => {
         const targetId = el.getAttribute('data-target');
@@ -20,7 +17,6 @@ document.querySelectorAll('[expand-more]').forEach(el => {
     });
 });
 
-// Back to top + year
 document.getElementById('up')?.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -36,7 +32,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
     function fitCanvas(){
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        const rect = wrapper.getBoundingClientRect(); // viewport-sized (fixed)
+        const rect = wrapper.getBoundingClientRect(); 
         w = canvas.width  = Math.max(1, Math.round(rect.width  * dpr));
         h = canvas.height = Math.max(1, Math.round(rect.height * dpr));
         ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -44,11 +40,10 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
     function makeStars(count){
         stars.length = 0;
-        // slightly larger/closer stars for visibility
         const layers = [
-            { size:[1.0, 1.9], speed: 8,   twinkle: 1.4 }, // near
-            { size:[0.7, 1.4], speed: 4,   twinkle: 1.0 }, // mid
-            { size:[0.45,1.0], speed: 1.6, twinkle: 0.6 }  // far
+            { size:[1.0, 1.9], speed: 8,   twinkle: 1.4 }, 
+            { size:[0.7, 1.4], speed: 4,   twinkle: 1.0 }, 
+            { size:[0.45,1.0], speed: 1.6, twinkle: 0.6 }  
         ];
         for(let i=0;i<count;i++){
             const L = layers[Math.floor(Math.random()*layers.length)];
@@ -56,10 +51,10 @@ document.getElementById('year').textContent = new Date().getFullYear();
                 x: Math.random()*w,
                 y: Math.random()*h,
                 r: L.size[0] + Math.random()*(L.size[1]-L.size[0]),
-                baseA: 0.55 + Math.random()*0.35,     // 0.55–0.90 visibility
+                baseA: 0.55 + Math.random()*0.35,     
                 phase: Math.random()*Math.PI*2,
                 tw: L.twinkle*(0.8 + Math.random()*0.6),
-                vx: L.speed*(0.4 + Math.random()*0.8), // px/sec drifting right
+                vx: L.speed*(0.4 + Math.random()*0.8),
                 hue: 190 + Math.random()*200
             });
         }
@@ -71,7 +66,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
         ctx.fillStyle = `hsla(${s.hue}, 90%, 88%, ${a})`;
-        const glow = 8 + s.r * 6;              // softer, brighter glow
+        const glow = 8 + s.r * 6;             
         ctx.shadowColor = `hsla(${s.hue}, 100%, 82%, ${a*0.9})`;
         ctx.shadowBlur  = glow;
         ctx.fill();
@@ -95,7 +90,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
     function init(){
         fitCanvas();
-        const density = Math.round((w*h)/12000); // denser than before (~+50%)
+        const density = Math.round((w*h)/12000);
         makeStars(density);
         cancelAnimationFrame(animId);
         if(reduceMotion){
@@ -108,4 +103,46 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
     window.addEventListener('resize', () => { fitCanvas(); init(); }, { passive:true });
     requestAnimationFrame(init);
+})();
+
+(function(){
+    function expand(el){
+        el.classList.add('is-open');
+        const startHeight = el.scrollHeight;
+        el.style.height = '0px';
+        el.offsetHeight; 
+        el.style.height = startHeight + 'px';
+        const onEnd = () => {
+            el.style.height = 'auto';
+            el.removeEventListener('transitionend', onEnd);
+        };
+        el.addEventListener('transitionend', onEnd);
+    }
+
+    function collapse(el){
+        const startHeight = el.scrollHeight;
+        el.style.height = startHeight + 'px';
+        el.offsetHeight;
+        el.style.height = '0px';
+        const onEnd = () => {
+            el.classList.remove('is-open');
+            el.removeEventListener('transitionend', onEnd);
+        };
+        el.addEventListener('transitionend', onEnd);
+    }
+
+    document.querySelectorAll('[expand-more]').forEach(btn => {
+        const targetId = btn.getAttribute('data-target');
+        const content = document.getElementById(targetId);
+        btn.addEventListener('click', () => {
+            const isOpen = content.classList.contains('is-open');
+            if (isOpen) {
+                collapse(content);
+                btn.textContent = btn.getAttribute('data-showtext');
+            } else {
+                expand(content);
+                btn.textContent = btn.getAttribute('data-hidetext');
+            }
+        });
+    });
 })();

@@ -261,6 +261,25 @@ img{ max-width:100%; display:block; border-radius:12px; }
 .exp-card p{ margin:.35rem 0 0; }
 .exp-link{ color:var(--acc-1); text-decoration:underline; }
 
+.expandMoreContent {
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition:
+            height 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
+            visibility 0s linear 0.45s;
+}
+
+.expandMoreContent.is-open {
+    visibility: visible;
+    transition:
+            height 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
+            visibility 0s linear 0s;
+}
+
+
+
+
 /* Contact */
 form.glass{
     width:min(760px, 100%);
